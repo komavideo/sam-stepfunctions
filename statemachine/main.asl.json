@@ -1,0 +1,16 @@
+{
+  "Comment": "我的第一个 Step Functions 工作流",
+  "StartAt": "HelloState",
+  "States": {
+    "HelloState": {
+      "Type": "Pass",
+      "Result": "HelloResult",
+      "Next": "WorldState"
+    },
+    "WorldState": {
+      "Type": "Pass",
+      "Result": "WorldResult",
+      "End": true
+    }
+  }
+}

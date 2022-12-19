@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  my-stepfunctions
+
+  Sample SAM Template for my-stepfunctions
+
+Resources:
+  MyStateMachine:
+    Type: AWS::Serverless::StateMachine # More info about State Machine Resource: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-statemachine.html
+    Properties:
+      DefinitionUri: statemachine/main.asl.json
+      Policies: # Find out more about SAM policy templates: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-policy-templates.html
+        - AWSLambdaRole
+
+Outputs:
+  # Find out more about other implicit resources you can reference within SAM
+  # https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-generated-resources.html
+  MyStateMachineArn:
+    Description: "State machine ARN"
+    Value: !Ref MyStateMachine
+  MyStateMachineRoleArn:
+    Description: "IAM Role created for State machine based on the specified SAM Policy Templates"
+    Value: !GetAtt MyStateMachineRole.Arn
