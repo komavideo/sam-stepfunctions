@@ -23,6 +23,18 @@ Resources:
       Runtime: python3.9
       Architectures:
         - x86_64
+      Layers:
+        - !Ref MyLayer
+
+  MyLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: layer/python
+      CompatibleRuntimes:
+        - python3.9
+    Metadata:
+      BuildMethod: python3.9
+    LayerName: MyLayer
 
 Outputs:
   # Find out more about other implicit resources you can reference within SAM
