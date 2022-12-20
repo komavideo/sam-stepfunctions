@@ -1,10 +1,35 @@
 {
-  "Comment": "我的第一个 Step Functions 工作流",
+  "Comment": "我的第一个 SAM Step Functions 工作流",
   "StartAt": "HelloState",
   "States": {
     "HelloState": {
       "Type": "Pass",
-      "Result": "HelloResult",
+      "Result": {
+        "result": "HelloResult"
+      },
+      "Next": "HelloWorldLambda"
+    },
+    "HelloWorldLambda": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "OutputPath": "$.Payload",
+      "Parameters": {
+        "Payload.$": "$",
+        "FunctionName": "${HelloWorldFunctionArn}:$LATEST"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException",
+            "Lambda.TooManyRequestsException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
       "Next": "WorldState"
     },
     "WorldState": {
